@@ -5,6 +5,10 @@ import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 
 const FROM_ADDRESS = 'The Creative Film <hello@thecreativefilm.com>';
+// Distinct from-address for internal alerts — sending hello@ -> hello@ gets
+// bounced by Hostinger as a spoof/loop, since Resend's IPs aren't in the
+// root domain's SPF record (only the "send." subdomain is).
+const NOTIFY_FROM_ADDRESS = 'TCF Waitlist <notifications@thecreativefilm.com>';
 const NOTIFY_ADDRESS = 'hello@thecreativefilm.com';
 
 export async function POST(request: Request) {
@@ -55,7 +59,7 @@ export async function POST(request: Request) {
 
       // 2. Internal notification to TCF inbox
       resend.emails.send({
-        from: FROM_ADDRESS,
+        from: NOTIFY_FROM_ADDRESS,
         to: NOTIFY_ADDRESS,
         subject: `New sign-up: ${email}`,
         html: `<p><strong>${email}</strong> just submitted the TCF contact form.</p>`,
