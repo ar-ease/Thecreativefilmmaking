@@ -36,8 +36,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    // Run both sends in parallel — faster and independent of each other
-    await Promise.all([
+    // Run both sends in parallel — faster and independent of each other.
+    // The Resend SDK does NOT throw on API-level failures (bad key, unverified
+    // domain, rate limit, etc.) — it resolves with { data, error }. We must
+    // check `error` on each result ourselves, or failures go silent.
+    const [confirmation, notification] = await Promise.all([
       // 1. Confirmation to the subscriber
       resend.emails.send({
         from: FROM_ADDRESS,
@@ -65,6 +68,19 @@ export async function POST(request: Request) {
         html: `<p><strong>${email}</strong> just submitted the TCF contact form.</p>`,
       }),
     ]);
+
+    if (confirmation.error) {
+      console.error('[waitlist] Resend error (confirmation):', confirmation.error);
+    }
+    if (notification.error) {
+      console.error('[waitlist] Resend error (notification):', notification.error);
+    }
+
+    // The subscriber-facing send is what the user experiences — fail the
+    // request if that one didn't go out, even if the internal alert did.
+    if (confirmation.error) {
+      return NextResponse.json({ error: 'Failed to send email.' }, { status: 500 });
+    }
 
     return NextResponse.json({ ok: true });
   } catch (err) {
