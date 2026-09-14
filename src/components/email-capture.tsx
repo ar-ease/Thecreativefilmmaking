@@ -2,18 +2,32 @@
 
 import { useState, type SubmitEvent } from 'react';
 
-type Status = 'idle' | 'submitting' | 'success';
+type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 export function EmailCapture() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<Status>('idle');
 
-  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
+  async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     if (status !== 'idle') return;
-    // TODO: wire to the waitlist API once it exists.
+
     setStatus('submitting');
-    window.setTimeout(() => setStatus('success'), 550);
+
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!res.ok) throw new Error('Request failed');
+      setStatus('success');
+    } catch {
+      // Reset to idle after a beat so the user can retry
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 3000);
+    }
   }
 
   return (
@@ -44,7 +58,7 @@ export function EmailCapture() {
               autoComplete="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              placeholder="you@domain.com"
+              placeholder="your@email.com"
               disabled={status !== 'idle'}
               className="h-14 w-full min-w-0 bg-transparent font-body text-[15px] text-[#f5f1ea] placeholder:text-[#f5f1ea]/35 focus:outline-none disabled:opacity-60"
             />
@@ -129,6 +143,16 @@ export function EmailCapture() {
           </div>
         </div>
       )}
+
+      {/* error layer */}
+      {status === 'error' && (
+        <div className="animate-rise-in absolute inset-0 flex flex-col items-center justify-center gap-2">
+          <p className="font-body text-sm text-[#f5f1ea]/70">
+            Something went wrong — please try again.
+          </p>
+        </div>
+      )}
+
     </div>
   );
 }

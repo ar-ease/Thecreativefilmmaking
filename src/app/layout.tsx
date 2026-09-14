@@ -16,11 +16,11 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: 'The Creative Film',
   description:
-    'We make stories worth feeling. TCF is in production — leave your email and be first to know when we premiere.',
+    'We make stories worth feeling. TCF is in production — reach us at hello@thecreativefilm.com or leave your email to be first to know when we premiere.',
   openGraph: {
     title: 'The Creative Film',
     description:
-      'We make stories worth feeling. TCF is in production — leave your email and be first to know when we premiere.',
+      'We make stories worth feeling. TCF is in production — reach us at hello@thecreativefilm.com or leave your email to be first to know when we premiere.',
     url: 'https://thecreativefilm.com',
     siteName: 'The Creative Film',
     images: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'The Creative Film',
     description:
-      'We make stories worth feeling. TCF is in production — leave your email and be first to know when we premiere.',
+      'We make stories worth feeling. TCF is in production — reach us at hello@thecreativefilm.com or leave your email to be first to know when we premiere.',
     images: ['/tcf-logo-banner.png'],
   },
 };

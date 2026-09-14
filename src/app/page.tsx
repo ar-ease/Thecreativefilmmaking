@@ -16,8 +16,8 @@ export default function Home() {
       </video>
 
       {/* cinematic grade — grounds the footage in a neutral tone */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#141312]/80 via-[#141312]/55 to-[#141312]/90" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#141312_92%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#141312]/40 via-[#141312]/20 to-[#141312]/55" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#141312_98%)]" />
 
       <div className="relative z-10 flex min-h-dvh flex-col px-6 sm:px-10">
         <header className="animate-fade-up flex items-center justify-between py-8">
@@ -51,7 +51,7 @@ export default function Home() {
           >
             <span className="uppercase tracking-wide text-[#F5C518]">TCF is coming soon</span>
             <br />
-            For enquiries, collaborations, or anything else, leave us a note and we&rsquo;ll get
+            For enquiries, collaborations, or anything else, submit your email and we&rsquo;ll get
             back to you.
           </p>
 
@@ -68,6 +68,12 @@ export default function Home() {
           style={{ animationDelay: '520ms' }}
         >
           <span>&copy; {new Date().getFullYear()} thecreativefilm</span>
+          <a
+            href="mailto:hello@thecreativefilm.com"
+            className="transition-colors duration-200 hover:text-[#f5f1ea]/60"
+          >
+            hello@thecreativefilm.com
+          </a>
           <span className="uppercase tracking-[0.2em]">In production</span>
         </footer>
       </div>
