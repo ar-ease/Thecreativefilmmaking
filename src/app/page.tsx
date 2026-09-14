@@ -52,7 +52,7 @@ export default function Home() {
             <span className="uppercase tracking-wide text-[#F5C518]">TCF is coming soon</span>
             <br />
             For enquiries, collaborations, or anything else, submit your email and we&rsquo;ll get
-            back to you.
+            back to you.see yaa
           </p>
 
           <div
