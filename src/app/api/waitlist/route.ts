@@ -5,11 +5,12 @@ import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 
 const FROM_ADDRESS = 'The Creative Film <hello@thecreativefilm.com>';
-// Distinct from-address for internal alerts — sending hello@ -> hello@ gets
-// bounced by Hostinger as a spoof/loop, since Resend's IPs aren't in the
-// root domain's SPF record (only the "send." subdomain is).
 const NOTIFY_FROM_ADDRESS = 'TCF Waitlist <notifications@thecreativefilm.com>';
-const NOTIFY_ADDRESS = 'hello@thecreativefilm.com';
+// Hostinger's mail server bounces anything addressed to @thecreativefilm.com
+// when it arrives via Resend's IPs (confirmed: direct Gmail -> hello@ works,
+// Resend -> hello@ doesn't, regardless of from-address). Notify a Gmail inbox
+// instead, which delivers reliably.
+const NOTIFY_ADDRESS = 'arghya0017@gmail.com';
 
 export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY;
