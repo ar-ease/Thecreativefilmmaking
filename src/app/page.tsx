@@ -49,7 +49,9 @@ export default function Home() {
             className="animate-fade-up max-w-md text-balance font-body text-[15px] leading-relaxed text-[#f5f1ea]/60"
             style={{ animationDelay: '260ms' }}
           >
-            <span className="uppercase tracking-wide text-[#F5C518]">TCF is coming soon</span>
+            <span className="font-display font-bold uppercase tracking-wide text-[#F5C518]">
+              TCF is coming soon
+            </span>
             <br />
             For enquiries, collaborations, or anything else, submit your email and we&rsquo;ll get
             back to you.
