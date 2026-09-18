@@ -1,16 +1,22 @@
 'use client';
 
-import { useState, type SubmitEvent } from 'react';
+import { useId, useState, type SubmitEvent } from 'react';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
-export function EmailCapture() {
+type Props = {
+  variant?: 'compact' | 'full';
+  className?: string;
+};
+
+export function EmailCapture({ variant = 'full', className = '' }: Props) {
+  const id = useId();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<Status>('idle');
 
   async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (status !== 'idle') return;
+    if (status === 'submitting' || status === 'success') return;
 
     setStatus('submitting');
 
@@ -24,135 +30,84 @@ export function EmailCapture() {
       if (!res.ok) throw new Error('Request failed');
       setStatus('success');
     } catch {
-      // Reset to idle after a beat so the user can retry
       setStatus('error');
-      setTimeout(() => setStatus('idle'), 3000);
     }
   }
 
+  const isFull = variant === 'full';
+
+  if (status === 'success') {
+    return (
+      <div className={`w-full ${className}`} role="status" aria-live="polite">
+        <p className={`font-display italic text-paper ${isFull ? 'text-[30px] leading-tight' : 'text-[17px]'}`}>
+          You&rsquo;re on the list.
+        </p>
+        <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+          We&rsquo;ll write when we premiere.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div className="relative w-full max-w-md">
-      {/* form layer */}
-      <form
-        onSubmit={handleSubmit}
-        aria-hidden={status === 'success'}
-        className={`group relative w-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
-          status === 'success'
-            ? 'pointer-events-none scale-[0.98] opacity-0 blur-sm'
-            : 'opacity-100'
-        }`}
-        aria-label="Join the TCF waitlist"
+    <form
+      onSubmit={handleSubmit}
+      aria-label="Join the TCF mailing list"
+      noValidate={false}
+      className={`w-full ${className}`}
+    >
+      <label
+        htmlFor={id}
+        className="mb-3 block font-mono text-[11px] uppercase tracking-[0.18em] text-muted"
       >
-        {/* outer shell */}
-        <div className="relative rounded-[1.75rem] bg-white/[0.04] p-1.5 ring-1 ring-white/10 backdrop-blur-md transition-shadow duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-focus-within:shadow-[0_0_28px_-6px_rgba(255,67,1,0.5)] group-focus-within:ring-[#FF4301]/50">
-          {/* inner core */}
-          <div className="relative flex items-center gap-2 rounded-[calc(1.75rem-0.375rem)] bg-[#2F2519]/60 pl-5 pr-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)]">
-            <label htmlFor="tcf-waitlist-email" className="sr-only">
-              Email address
-            </label>
-            <input
-              id="tcf-waitlist-email"
-              name="email"
-              type="email"
-              required
-              autoComplete="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="your@email.com"
-              disabled={status !== 'idle'}
-              className="h-14 w-full min-w-0 bg-transparent font-body text-[15px] text-[#f5f1ea] placeholder:text-[#f5f1ea]/35 focus:outline-none disabled:opacity-60"
+        Email
+      </label>
+
+      <div className="group flex items-end gap-4 border-b border-line transition-colors duration-300 focus-within:border-accent">
+        <input
+          id={id}
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          value={email}
+          onChange={(event) => {
+            setEmail(event.target.value);
+            if (status === 'error') setStatus('idle');
+          }}
+          placeholder="you@example.com"
+          disabled={status === 'submitting'}
+          className={`w-full min-w-0 bg-transparent pb-3 text-paper placeholder:text-muted/60 focus:outline-none disabled:opacity-60 ${
+            isFull ? 'text-[17px]' : 'text-[16px]'
+          }`}
+        />
+        <button
+          type="submit"
+          aria-label="Subscribe"
+          disabled={status === 'submitting'}
+          className="shrink-0 pb-3 text-paper transition-colors duration-300 hover:text-accent disabled:opacity-60"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path
+              d="M3 10h14M11 4l6 6-6 6"
+              stroke="currentColor"
+              strokeWidth="1.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
-            <button
-              type="submit"
-              aria-label="Join the waitlist"
-              disabled={status !== 'idle'}
-              className="group/btn relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#FF4301] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:scale-105 active:scale-95 disabled:hover:scale-100"
-            >
-              {/* arrow — idle */}
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                className={`absolute transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 ${
-                  status === 'idle'
-                    ? 'scale-100 rotate-0 opacity-100'
-                    : 'scale-50 -rotate-45 opacity-0'
-                }`}
-              >
-                <path
-                  d="M3 13 13 3M13 3H5M13 3V11"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+          </svg>
+        </button>
+      </div>
 
-              {/* checkmark — submitting / success */}
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                className={`absolute transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] ${
-                  status === 'idle'
-                    ? 'scale-50 rotate-45 opacity-0'
-                    : 'scale-100 rotate-0 opacity-100'
-                }`}
-              >
-                <path
-                  d="M3 8.5 6.5 12 13 4"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className={status !== 'idle' ? 'animate-draw-check' : ''}
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </form>
-
-      {/* success layer */}
-      {status === 'success' && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-          <div className="relative flex h-11 w-11 items-center justify-center">
-            <span className="animate-ring-pulse absolute inset-0 rounded-full border border-[#FF4301]" />
-            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#FF4301]/12 ring-1 ring-[#FF4301]/40">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path
-                  d="M3 8.5 6.5 12 13 4"
-                  stroke="#FF4301"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="animate-draw-check"
-                />
-              </svg>
-            </span>
-          </div>
-
-          <div
-            className="animate-rise-in flex flex-col items-center gap-1 text-center"
-            style={{ animationDelay: '120ms' }}
-          >
-            <p className="font-display text-lg italic text-[#f5f1ea]">You&rsquo;re in.</p>
-            <p className="text-sm text-[#f5f1ea]/50">We&rsquo;ll be in touch soon.</p>
-          </div>
-        </div>
-      )}
-
-      {/* error layer */}
-      {status === 'error' && (
-        <div className="animate-rise-in absolute inset-0 flex flex-col items-center justify-center gap-2">
-          <p className="font-body text-sm text-[#f5f1ea]/70">
-            Something went wrong — please try again.
-          </p>
-        </div>
-      )}
-
-    </div>
+      <p
+        className="mt-3 min-h-[1.25rem] font-mono text-[11px] uppercase tracking-[0.18em] text-muted"
+        role="status"
+        aria-live="polite"
+      >
+        {status === 'error' && 'Something went wrong. Try again.'}
+        {status === 'submitting' && 'Sending…'}
+        {status === 'idle' && isFull && 'One email a month. No spam.'}
+      </p>
+    </form>
   );
 }
