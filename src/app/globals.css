@@ -20,6 +20,7 @@
   --font-display: var(--font-instrument-serif), Georgia, serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --font-headline: var(--font-anton), 'Arial Narrow', Impact, sans-serif;
 }
 
 @layer base {
@@ -57,6 +58,29 @@
 
   .lenis.lenis-stopped {
     overflow: clip;
+  }
+
+  html[data-intro='loading'] {
+    overflow: hidden;
+  }
+
+  html[data-intro='loading'] > body > header {
+    opacity: 0;
+  }
+
+  html[data-intro='done'] > body > header {
+    animation: header-reveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+  }
+
+  @keyframes header-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

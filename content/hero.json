@@ -1,0 +1,11 @@
+{
+  "lines": ["We make", "stories", "worth feeling"],
+  "intro": "You've built a place people love. We make the film that makes them want to walk in.",
+  "loaderLabel": "Loading frames",
+  "tiles": [
+    { "slot": "top", "src": "/video/hero-01.mp4", "poster": "/video/hero-01.jpg", "alt": "TODO: describe frame 1" },
+    { "slot": "left", "src": "/video/hero-02.mp4", "poster": "/video/hero-02.jpg", "alt": "TODO: describe frame 2" },
+    { "slot": "bottom-left", "src": "/video/hero-03.mp4", "poster": "/video/hero-03.jpg", "alt": "TODO: describe frame 3" },
+    { "slot": "right", "src": "/video/hero-04.mp4", "poster": "/video/hero-04.jpg", "alt": "TODO: describe frame 4" }
+  ]
+}

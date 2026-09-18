@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Instrument_Serif, Inter, JetBrains_Mono } from 'next/font/google';
+import { Anton, Instrument_Serif, Inter, JetBrains_Mono } from 'next/font/google';
 import { Grain } from '@/components/grain';
 import { SmoothScroll } from '@/components/smooth-scroll';
 import { site } from '@content';
@@ -20,6 +20,14 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   variable: '--font-jetbrains-mono',
   subsets: ['latin'],
+  weight: ['300', '400'],
+});
+
+// TODO(brand): condensed headline face for the hero statement — swap here if a licensed cut is chosen
+const anton = Anton({
+  variable: '--font-anton',
+  subsets: ['latin'],
+  weight: '400',
 });
 
 const DESCRIPTION =
@@ -60,7 +68,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
       lang="en"
-      className={`${instrumentSerif.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${instrumentSerif.variable} ${inter.variable} ${jetbrainsMono.variable} ${anton.variable}`}
     >
       <body>
         <a

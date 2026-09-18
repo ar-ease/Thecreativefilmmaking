@@ -68,6 +68,17 @@ export type Capability = {
   value: string;
 };
 
+export type HeroTile = Clip & {
+  slot: 'top' | 'left' | 'bottom-left' | 'right';
+};
+
+export type Hero = {
+  lines: string[];
+  intro: string;
+  loaderLabel: string;
+  tiles: HeroTile[];
+};
+
 export type CraftBlock = {
   title: string;
   body: string;

@@ -2,6 +2,7 @@ import type {
   Capability,
   CraftBlock,
   FaqItem,
+  Hero,
   KitGroup,
   Package,
   Project,
@@ -17,7 +18,9 @@ import addonsJson from './addons.json';
 import kitJson from './kit.json';
 import capabilitiesJson from './capabilities.json';
 import craftJson from './craft.json';
+import heroJson from './hero.json';
 
+export const hero: Hero = heroJson as Hero;
 export const projects: Project[] = projectsJson;
 export const services: Service[] = servicesJson;
 export const packages: Package[] = packagesJson;
