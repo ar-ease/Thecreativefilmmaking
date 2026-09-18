@@ -1,0 +1,34 @@
+[
+  {
+    "number": "01",
+    "slug": "brand-film",
+    "title": "Brand film",
+    "body": "One film that says who you are before anyone reads a word. Sixty to ninety seconds, made for your website, your Instagram grid and the wall behind your counter.",
+    "inclusions": ["Half-day shoot", "Story & shot plan", "Colour grade", "Licensed music", "16:9 and 9:16 cuts"],
+    "clip": { "src": "/video/tcfvid.mp4", "poster": "/video/tcfvid-poster.jpg", "alt": "TODO: brand film clip" }
+  },
+  {
+    "number": "02",
+    "slug": "social-reels",
+    "title": "Social reels",
+    "body": "Short, vertical, cut to hold a thumb. Shot in batches so you have something to post every week without booking a crew every week.",
+    "inclusions": ["Batch of 4–8 reels", "Trend-aware edits", "Captions & hooks", "Delivered in 7 days"],
+    "clip": { "src": "/video/tcfvid.mp4", "poster": "/video/tcfvid-poster.jpg", "alt": "TODO: reels clip" }
+  },
+  {
+    "number": "03",
+    "slug": "food-and-product",
+    "title": "Food & product",
+    "body": "The steam, the pour, the crack of the crust. Close, slow and lit like it costs more than it does. For menus, launches and the post that finally makes people order.",
+    "inclusions": ["Macro & slow-motion", "Styled tabletop", "Hero stills from the shoot", "Menu-ready loops"],
+    "clip": { "src": "/video/tcfvid.mp4", "poster": "/video/tcfvid-poster.jpg", "alt": "TODO: food clip" }
+  },
+  {
+    "number": "04",
+    "slug": "events-and-launches",
+    "title": "Events & launches",
+    "body": "Opening night, the club's anniversary, the first pour at the new bar. One camera that knows where to stand, and an edit delivered while people are still talking about it.",
+    "inclusions": ["Single-operator coverage", "Same-week highlight", "Vertical teaser for the day after", "Raw selects on request"],
+    "clip": { "src": "/video/tcfvid.mp4", "poster": "/video/tcfvid-poster.jpg", "alt": "TODO: event clip" }
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "TODO-client-slug",
+    "client": "TODO Client Name",
+    "title": "TODO: one-line film title",
+    "tag": "Brand film",
+    "city": "Balurghat",
+    "year": 2026,
+    "role": "Direction, camera, edit, grade",
+    "runtime": "01:12",
+    "featured": true,
+    "film": {
+      "src": "/video/tcfvid.mp4",
+      "poster": "/video/tcfvid-poster.jpg",
+      "alt": "TODO: describe the film's opening frame"
+    },
+    "stills": [
+      { "src": "/work/TODO-client-slug/still-01.jpg", "alt": "TODO still 1" },
+      { "src": "/work/TODO-client-slug/still-02.jpg", "alt": "TODO still 2" },
+      { "src": "/work/TODO-client-slug/still-03.jpg", "alt": "TODO still 3" },
+      { "src": "/work/TODO-client-slug/still-04.jpg", "alt": "TODO still 4" }
+    ],
+    "brief": "TODO: One paragraph. What the client had, what they needed, and why now.",
+    "approach": [
+      "TODO: Paragraph on look and story — how we found the angle.",
+      "TODO: Paragraph on shoot day — light, lenses, movement.",
+      "TODO: Paragraph on grade and sound — what we did in post and why."
+    ],
+    "result": "TODO: One concrete line — a number, a booking, a reaction.",
+    "seoDescription": "TODO: 150 characters on the film for the share card."
+  }
+]

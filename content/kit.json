@@ -1,0 +1,8 @@
+[
+  { "category": "Camera", "items": ["TODO: e.g. Sony FX3", "TODO: e.g. Sony A7 IV (B-cam)", "4K 10-bit, S-Log3"] },
+  { "category": "Lenses", "items": ["TODO: e.g. 24–70 f/2.8", "TODO: e.g. 35 f/1.4", "TODO: e.g. 90 macro"] },
+  { "category": "Movement", "items": ["Gimbal", "Slider", "Tripod with fluid head"] },
+  { "category": "Light", "items": ["TODO: e.g. 2× 300W LED", "Softbox & grid", "Practical bulbs"] },
+  { "category": "Sound", "items": ["Wireless lavs", "Shotgun mic", "Field recorder"] },
+  { "category": "Post", "items": ["DaVinci Resolve", "Licensed music library", "Sound design"] }
+]

@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import { Instrument_Serif, Inter, JetBrains_Mono } from 'next/font/google';
+import { Grain } from '@/components/grain';
+import { SmoothScroll } from '@/components/smooth-scroll';
+import { site } from '@content';
 import './globals.css';
 
 const instrumentSerif = Instrument_Serif({
@@ -19,22 +22,21 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
 });
 
-const SITE_URL = 'https://thecreativefilm.com';
 const DESCRIPTION =
   'We make stories worth feeling. Brand films, social reels and food & product content for cafés, restaurants and local brands across North Bengal.';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(site.url),
   title: {
-    default: 'The Creative Film',
-    template: '%s — The Creative Film',
+    default: site.name,
+    template: `%s — ${site.name}`,
   },
   description: DESCRIPTION,
   openGraph: {
-    title: 'The Creative Film',
+    title: site.name,
     description: DESCRIPTION,
-    url: SITE_URL,
-    siteName: 'The Creative Film',
+    url: site.url,
+    siteName: site.name,
     images: [
       {
         url: '/brand/tcf-logo-banner.png',
@@ -48,7 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'The Creative Film',
+    title: site.name,
     description: DESCRIPTION,
     images: ['/brand/tcf-logo-banner.png'],
   },
@@ -60,7 +62,16 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       lang="en"
       className={`${instrumentSerif.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-paper focus:px-4 focus:py-2 focus:font-mono focus:text-[11px] focus:uppercase focus:tracking-[0.18em] focus:text-ink"
+        >
+          Skip to content
+        </a>
+        <SmoothScroll>{children}</SmoothScroll>
+        <Grain />
+      </body>
     </html>
   );
 }

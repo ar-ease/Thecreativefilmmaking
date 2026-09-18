@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "the-reel",
+    "name": "The Reel",
+    "strap": "One shoot, four reels, posted this week.",
+    "price": "TODO ₹",
+    "includes": ["Half-day shoot", "4 vertical reels", "Captions & hooks", "Delivered in 7 days"],
+    "mostBooked": false
+  },
+  {
+    "slug": "the-story",
+    "name": "The Story",
+    "strap": "A brand film and the reels cut from it.",
+    "price": "TODO ₹",
+    "includes": ["Full-day shoot", "60–90s brand film", "6 vertical reels", "Hero stills", "Colour grade & sound design", "Delivered in 7 days"],
+    "mostBooked": true
+  },
+  {
+    "slug": "the-monthly",
+    "name": "The Monthly",
+    "strap": "A crew that already knows your place.",
+    "price": "TODO ₹ / month",
+    "includes": ["Monthly shoot day", "8 reels a month", "Menu & launch coverage", "Priority turnaround", "Cancel any time"],
+    "mostBooked": false
+  }
+]
