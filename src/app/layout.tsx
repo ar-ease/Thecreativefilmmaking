@@ -1,34 +1,9 @@
 import type { Metadata } from 'next';
-import { Anton, Instrument_Serif, Inter, JetBrains_Mono } from 'next/font/google';
 import { Grain } from '@/components/grain';
 import { SmoothScroll } from '@/components/smooth-scroll';
 import { site } from '@content';
+import { display, mono, serif } from './fonts';
 import './globals.css';
-
-const instrumentSerif = Instrument_Serif({
-  variable: '--font-instrument-serif',
-  subsets: ['latin'],
-  weight: '400',
-  style: ['normal', 'italic'],
-});
-
-const inter = Inter({
-  variable: '--font-inter',
-  subsets: ['latin'],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: '--font-jetbrains-mono',
-  subsets: ['latin'],
-  weight: ['300', '400'],
-});
-
-// TODO(brand): condensed headline face for the hero statement — swap here if a licensed cut is chosen
-const anton = Anton({
-  variable: '--font-anton',
-  subsets: ['latin'],
-  weight: '400',
-});
 
 const DESCRIPTION =
   'We make stories worth feeling. Brand films, social reels and food & product content for cafés, restaurants and local brands across North Bengal.';
@@ -66,10 +41,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html
-      lang="en"
-      className={`${instrumentSerif.variable} ${inter.variable} ${jetbrainsMono.variable} ${anton.variable}`}
-    >
+    <html lang="en" className={`${display.variable} ${serif.variable} ${mono.variable}`}>
       <body>
         <a
           href="#main"

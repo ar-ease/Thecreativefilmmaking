@@ -8,24 +8,63 @@ import { Logo } from './logo';
 import { useLenis } from './smooth-scroll';
 
 const LINKS = [
+  { href: '/studio', label: 'About' },
+  { href: '/work', label: 'Work' },
   { href: '/services', label: 'Services' },
-  { href: '/studio', label: 'Studio' },
 ] as const;
 
 const label = 'font-mono text-[11px] uppercase tracking-[0.18em]';
+const navLabel = 'font-display text-[13px] font-bold uppercase tracking-[0.01em]';
+
+/** Three distinct hand-drawn squiggles so each nav link gets its own underline character. */
+const SQUIGGLES = [
+  'M1 5.5c3-4.5 6 3.5 9.5-.5s6.5-4 10-.5 6 4.5 12.5 1',
+  'M1 5c1.8-2.6 3.6 2.6 5.4 0s3.6-2.6 5.4 0 3.6 2.6 5.4 0 3.6-2.6 5.4 0 3.6 2.6 5.4 0 3.6-2.6 5.4 0',
+  'M1 6c4-6 12 6 16 0s8-6 16 0',
+] as const;
+
+/** Nav link with a hand-drawn squiggle that draws itself in under the label on hover. */
+function SquiggleLink({
+  href,
+  label: text,
+  active,
+  variant = 0,
+}: {
+  href: string;
+  label: string;
+  active: boolean;
+  variant?: number;
+}) {
+  return (
+    <Link
+      href={href}
+      aria-current={active ? 'page' : undefined}
+      className={`${navLabel} group relative inline-block rounded-sm px-4 py-2 text-ink transition-colors duration-300 hover:text-accent`}
+    >
+      {text}
+      <svg
+        width="34"
+        height="9"
+        viewBox="0 0 34 9"
+        fill="none"
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-[calc(100%-9px)] h-[9px] w-[34px] -translate-x-1/2 text-accent opacity-0 [clip-path:inset(0_100%_0_0)] transition-[clip-path,opacity] duration-[220ms] ease-[var(--ease-out)] group-hover:opacity-100 group-hover:[clip-path:inset(0_0_0_0)] motion-reduce:transition-none"
+      >
+        <path
+          d={SQUIGGLES[variant % SQUIGGLES.length]}
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+        />
+      </svg>
+    </Link>
+  );
+}
 
 export function Nav() {
   const pathname = usePathname();
   const lenis = useLenis();
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > window.innerHeight - 80);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     if (open) lenis.current?.stop();
@@ -38,44 +77,33 @@ export function Nav() {
 
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-[70] transition-[background-color,border-color,backdrop-filter] duration-300 ${
-          scrolled && !open
-            ? 'border-b border-line bg-ink/70 backdrop-blur-md'
-            : 'border-b border-transparent bg-transparent'
-        }`}
-      >
+      <header className="fixed inset-x-0 top-0 z-[70]">
         <nav
           aria-label="Primary"
           className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 md:h-20 md:px-10"
         >
           <Logo />
 
-          <div className="hidden items-center gap-10 md:flex">
-            {LINKS.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                aria-current={pathname === l.href ? 'page' : undefined}
-                className={`${label} text-paper/80 transition-colors duration-300 hover:text-accent aria-[current=page]:text-paper`}
-              >
-                {l.label}
-              </Link>
+          <div className="hidden items-center gap-1 rounded-none bg-paper p-1.5 shadow-[0_2px_8px_rgba(0,0,0,0.08)] md:flex">
+            {LINKS.map((l, i) => (
+              <SquiggleLink key={l.href} href={l.href} label={l.label} active={pathname === l.href} variant={i} />
             ))}
-            <Link
-              href="/contact"
-              className={`${label} border border-paper/40 px-5 py-3 text-paper transition-colors duration-300 hover:border-accent hover:text-accent`}
-            >
-              Book a call
-            </Link>
           </div>
+
+          <Link
+            href="/contact"
+            className="hidden items-center gap-2 rounded-none bg-paper py-2 pl-3 pr-4 text-ink shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition-colors duration-300 hover:text-accent md:flex"
+          >
+            <span className="h-2 w-2 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+            <span className={navLabel}>Contact</span>
+          </Link>
 
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className={`${label} relative z-[80] py-2 text-paper md:hidden`}
+            className={`${navLabel} relative z-[80] rounded-none bg-paper px-4 py-2 text-ink shadow-[0_2px_8px_rgba(0,0,0,0.08)] md:hidden`}
           >
             {open ? 'Close ×' : 'Menu'}
           </button>
@@ -93,7 +121,7 @@ export function Nav() {
         }`}
       >
         <ul className="flex flex-col gap-6">
-          {[...LINKS, { href: '/contact', label: 'Book a call' }].map((l, i) => (
+          {[...LINKS, { href: '/contact', label: 'Contact' }].map((l, i) => (
             <li
               key={l.href}
               style={{ transitionDelay: open ? `${i * 60}ms` : '0ms' }}
@@ -105,7 +133,7 @@ export function Nav() {
                 href={l.href}
                 tabIndex={open ? 0 : -1}
                 onClick={() => setOpen(false)}
-                className="font-display text-[40px] leading-none tracking-[-0.02em] text-paper"
+                className="font-display text-[40px] font-bold leading-none tracking-[-0.02em] text-paper"
               >
                 {l.label}
               </Link>

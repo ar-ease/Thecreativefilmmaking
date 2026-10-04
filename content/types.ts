@@ -73,6 +73,7 @@ export type HeroTile = Clip & {
 };
 
 export type Hero = {
+  eyebrow: string;
   lines: string[];
   intro: string;
   loaderLabel: string;

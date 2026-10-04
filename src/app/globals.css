@@ -6,8 +6,13 @@
   --paper: #f2f0ed;
   --muted: #8a8580;
   --line: rgba(242, 240, 237, 0.12);
-  /* TODO(brand): placeholder accent, swap once the brand colour is decided */
-  --accent: #c87b3a;
+  --line-on-paper: rgba(10, 10, 10, 0.12);
+  /* The project's one entrance/reveal curve — reuse this instead of inlining a new cubic-bezier. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* TODO(brand): placeholder accent trio, swap once the brand palette is decided */
+  --accent: #f2601a;
+  --accent-pink: #ff4fa6;
+  --accent-coral: #ec4423;
 }
 
 @theme inline {
@@ -15,12 +20,18 @@
   --color-paper: var(--paper);
   --color-muted: var(--muted);
   --color-line: var(--line);
+  --color-line-on-paper: var(--line-on-paper);
   --color-accent: var(--accent);
+  --color-accent-pink: var(--accent-pink);
+  --color-accent-coral: var(--accent-coral);
 
-  --font-display: var(--font-instrument-serif), Georgia, serif;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
-  --font-headline: var(--font-anton), 'Arial Narrow', Impact, sans-serif;
+  /* Switzer for every headline and body use (see src/app/fonts.ts). */
+  --font-display: var(--font-switzer), system-ui, sans-serif;
+  --font-sans: var(--font-switzer), system-ui, sans-serif;
+  /* Instrument Serif — the second voice mixed word-by-word into display headlines. */
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  /* Geist Mono for labels/index numbers/timecode only — never body copy. */
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 @layer base {
@@ -83,6 +94,24 @@
     }
   }
 
+  @keyframes squiggle-draw {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -100,4 +129,20 @@
   @media (width >= 48rem) {
     padding-block: 160px;
   }
+}
+
+@keyframes blink {
+  0%, 88%, 100% { transform: scaleY(1); }
+  93% { transform: scaleY(0.1); }
+}
+
+@keyframes twinkle {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 #ff4fa6); }
+  50% { transform: scale(1.08); filter: drop-shadow(0 0 4px #ff4fa6); }
+}
+
+@keyframes clap {
+  0%, 50%, 100% { transform: rotate(0); }
+  62% { transform: rotate(-26deg); }
+  76% { transform: rotate(0); }
 }

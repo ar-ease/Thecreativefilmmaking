@@ -1,0 +1,25 @@
+--- /Users/ar-ease/.claude/jobs/0eb1e40b/tmp/hero.orig.tsx	2026-10-04 14:16:35.486036654 +0530
++++ src/components/hero/hero.tsx	2026-10-04 14:16:44.691926005 +0530
+@@ -163,15 +163,13 @@
+         >
+           <div className="flex items-center gap-3">
+             <span className="font-serif text-[16px] italic text-paper md:text-[18px]">Scroll to explore</span>
+-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-accent text-paper">
+-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+-                <path
+-                  d="M7 1v12M2 8l5 5 5-5"
+-                  stroke="currentColor"
+-                  strokeWidth="1.4"
+-                  strokeLinecap="round"
+-                  strokeLinejoin="round"
+-                />
++<span className="group pointer-events-auto relative flex h-14 w-14 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-none border-2 border-paper bg-accent text-paper shadow-[5px_5px_0_var(--accent-pink)] transition-[transform,box-shadow] duration-300 ease-[var(--ease-out)] hover:translate-x-[5px] hover:translate-y-[5px] hover:shadow-[0_0_0_var(--accent-pink)]">
++              <span className="absolute inset-0 -translate-y-full bg-accent-pink transition-transform duration-500 ease-[var(--ease-out)] group-hover:translate-y-0" />
++              <svg width="22" height="22" viewBox="0 0 14 14" fill="none" className="absolute transition-transform duration-500 ease-[var(--ease-out)] group-hover:translate-y-10 group-hover:text-ink">
++                <path d="M7 1v12M2 8l5 5 5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="square" />
++              </svg>
++              <svg width="22" height="22" viewBox="0 0 14 14" fill="none" className="absolute -translate-y-10 text-ink transition-transform duration-500 ease-[var(--ease-out)] group-hover:translate-y-0">
++                <path d="M7 1v12M2 8l5 5 5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="square" />
+               </svg>
+             </span>
+           </div>

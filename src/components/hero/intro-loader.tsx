@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import styles from './hero.module.css';
+import { gsap } from 'gsap';
 
 type Props = {
   label: string;
@@ -12,7 +12,7 @@ function Bracket({ flip = false }: { flip?: boolean }) {
   return (
     <svg
       viewBox="0 0 12 60"
-      className={styles.bracket}
+      className="h-[60px] w-3 flex-none text-paper"
       style={flip ? { transform: 'scaleX(-1)' } : undefined}
       aria-hidden="true"
     >
@@ -24,7 +24,7 @@ function Bracket({ flip = false }: { flip?: boolean }) {
 export function IntroLoader({ label, name, duration = 1500, onDone }: Props) {
   const [progress, setProgress] = useState(0);
   const [exiting, setExiting] = useState(false);
-  const done = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let raf = 0;
@@ -51,42 +51,63 @@ export function IntroLoader({ label, name, duration = 1500, onDone }: Props) {
     };
   }, [duration]);
 
+  useEffect(() => {
+    if (!exiting) return;
+    const el = containerRef.current;
+    if (!el) {
+      onDone();
+      return;
+    }
+    gsap.to(el, {
+      clipPath: 'inset(0 0 0 100%)',
+      duration: 0.62,
+      delay: 0.18,
+      ease: 'cubic-bezier(.65,0,.25,1)',
+      onComplete: onDone,
+    });
+  }, [exiting, onDone]);
+
   const chars = Math.round((progress / 100) * label.length);
 
   return (
     <div
-      className={styles.loader}
-      data-exiting={exiting}
+      ref={containerRef}
+      className="fixed inset-0 z-[95] grid place-items-center bg-[#050505] p-6 text-paper [clip-path:inset(0_0_0_0)]"
       aria-hidden="true"
-      onAnimationEnd={() => {
-        if (done.current) return;
-        done.current = true;
-        onDone();
-      }}
     >
-      <div className={styles.loaderStage}>
-        <div className={styles.loaderGraphic}>
+      <div className="flex w-[min(230px,100%)] flex-col items-center gap-3">
+        <div className="flex h-[60px] w-full items-center text-paper">
           <Bracket flip />
-          <svg viewBox="0 0 42 42" className={styles.loaderDots} aria-hidden="true">
+          <svg
+            viewBox="0 0 42 42"
+            className="mx-1 h-[30px] w-[30px] animate-spin [animation-duration:2s] [animation-timing-function:linear]"
+            aria-hidden="true"
+          >
             <circle cx="21" cy="6" r="4.5" fill="currentColor" />
             <circle cx="34" cy="28.5" r="4.5" fill="currentColor" />
             <circle cx="8" cy="28.5" r="4.5" fill="currentColor" />
           </svg>
           <Bracket />
-          <span className={styles.loaderGap} />
+          <span className="w-4 flex-none" />
           <Bracket flip />
-          <span className={styles.loaderLabel} style={{ width: `${chars}ch` }}>
+          <span
+            className="block overflow-hidden whitespace-nowrap font-mono text-[11px] font-light uppercase leading-tight"
+            style={{ width: `${chars}ch` }}
+          >
             {label}
           </span>
           <Bracket />
         </div>
 
-        <div className={styles.loaderStatus}>
+        <div className="flex w-full items-baseline justify-between font-mono text-[10px] uppercase leading-none tracking-[0.12em] [font-variant-numeric:tabular-nums]">
           <p>{name}</p>
-          <p>[{progress}%]</p>
+          <p className="text-accent">[{progress}%]</p>
         </div>
-        <div className={styles.loaderTrack}>
-          <span style={{ transform: `scaleX(${progress / 100})` }} />
+        <div className="h-px w-full overflow-hidden bg-[color-mix(in_srgb,var(--paper)_22%,transparent)]">
+          <span
+            className="block h-full w-full origin-left bg-paper transition-transform duration-[120ms] ease-linear"
+            style={{ transform: `scaleX(${progress / 100})` }}
+          />
         </div>
       </div>
     </div>
