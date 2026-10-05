@@ -133,7 +133,8 @@ export function ScrollStatement() {
     const render = (p: number) => {
       prog = p;
       const s = vw * (1 - 0.5 * lead); // headline starts peeking in from the right
-      const x = s - p ** 1.4 * (s + trackW - vw * 0.92); // stops with the last word fully in view // eases in, then picks up speed
+      // Eases in and out: p**1.4 hit full speed right at pin release, so the track stopped dead (the "shutter").
+      const x = s - smooth(0, 1, p) * (s + trackW - vw * 0.92); // stops with the last word fully in view
       track.style.transform = `translate3d(${x}px,0,0)`;
       letters.forEach((l, i) => {
         // Only letters still arriving on the right are scattered; once placed they stay straight.
