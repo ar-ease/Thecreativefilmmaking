@@ -1,6 +1,7 @@
 import { About } from '@/components/sections/about';
 import { EmailCapture } from '@/components/email-capture';
 import { Hero } from '@/components/hero/hero';
+import { ScrollStatement } from '@/components/sections/scroll-statement';
 import { Faq } from '@/components/sections/faq';
 import { FeaturedWork } from '@/components/sections/featured-work';
 import { Packages } from '@/components/sections/packages';
@@ -23,8 +24,9 @@ export default function Home() {
     <>
       <Hero content={hero} siteName={site.name} />
 
-      <About craft={craft} capabilities={capabilities} />
+      <ScrollStatement />
       <FeaturedWork projects={projects} />
+      <About craft={craft} capabilities={capabilities} />
       <ProcessSteps steps={processSteps} />
       <Services services={services} />
       <Packages packages={packages} />

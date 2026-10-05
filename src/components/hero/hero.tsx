@@ -106,7 +106,7 @@ export function Hero({ content, siteName }: Props) {
   return (
     <section
       ref={ref}
-      className="relative isolate grid min-h-[100svh] overflow-hidden px-6 pb-[max(24px,env(safe-area-inset-bottom))] text-paper md:px-10"
+      className="relative isolate grid min-h-[100svh] overflow-hidden px-6 text-paper md:px-10"
       aria-labelledby="hero-statement"
     >
       <video
@@ -129,15 +129,15 @@ export function Hero({ content, siteName }: Props) {
         <IntroLoader label={content.loaderLabel} name={siteName} onDone={() => setPhase('landing')} />
       )}
 
-      <div className="relative z-[2] grid min-h-[100svh] items-end justify-items-center gap-0 pb-0">
+      <div className="relative z-[2] grid min-h-[100svh] items-end justify-items-center gap-0 pb-[max(24px,env(safe-area-inset-bottom))]">
         <p
           ref={eyebrowRef}
-          className="m-0 mt-24 translate-y-2 whitespace-pre-line text-center font-serif text-[24px] leading-tight text-paper/80 opacity-0 blur-md motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:blur-none md:mt-36 md:text-[34px]"
+          className="m-0 mt-24 translate-y-2 whitespace-pre-line text-center font-serif text-[32px] font-medium leading-tight text-paper/80 opacity-0 blur-md motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:blur-none md:mt-36 md:text-[46px]"
         >
           {content.eyebrow}
         </p>
 
-        <div data-on={decoOn} className="group relative -mt-20 w-fit md:-mt-32">
+        <div data-on={decoOn} className="group relative -mt-14 w-fit md:-mt-24">
           <h1
             id="hero-statement"
             className="relative z-[1] m-0 max-w-[22ch] text-center text-[clamp(2.75rem,12vw,5.5rem)] uppercase leading-[0.9] tracking-[-0.01em] md:text-[clamp(4rem,8vw,7.5rem)] md:leading-[0.88]"
@@ -163,7 +163,7 @@ export function Hero({ content, siteName }: Props) {
           {/* Hover decorations: smiley, star, hand-drawn ring under the last line. */}
           <svg
             viewBox="0 0 48 48"
-            className="pointer-events-none absolute scale-0 opacity-0 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-data-[on=true]:scale-100 group-data-[on=true]:opacity-100 motion-reduce:transition-none -left-1 -top-7 z-[3] h-14 w-14 origin-center group-data-[on=true]:-rotate-12 md:-left-3 md:-top-11 md:h-20 md:w-20"
+            className="pointer-events-none absolute scale-0 opacity-0 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-data-[on=true]:scale-100 group-data-[on=true]:opacity-100 motion-reduce:transition-none left-7 -top-7 z-[3] h-14 w-14 origin-center group-data-[on=true]:-rotate-12 md:left-8 md:-top-11 md:h-20 md:w-20"
             aria-hidden="true"
           >
             <circle cx="24" cy="24" r="24" className="fill-accent" />
@@ -180,7 +180,7 @@ export function Hero({ content, siteName }: Props) {
             aria-hidden="true"
           >
             <g transform="rotate(14 20 20)">
-              <path d="M20 0c1.5 12 6.5 18.5 20 20-13.5 1.5-18.5 8-20 20C18.5 28 13.5 21.5 0 20 13.5 18.5 18.5 12 20 0Z" className="[transform-box:fill-box] origin-center fill-accent-pink group-data-[on=true]:animate-[twinkle_2.6s_ease-in-out_0.5s_infinite] motion-reduce:animate-none" />
+              <path d="M20 0c1.5 12 6.5 18.5 20 20-13.5 1.5-18.5 8-20 20C18.5 28 13.5 21.5 0 20 13.5 18.5 18.5 12 20 0Z" className="[transform-box:fill-box] origin-center fill-[#2f6bff]" />
             </g>
           </svg>
           <svg

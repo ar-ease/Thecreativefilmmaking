@@ -36,12 +36,12 @@ export function CtaLink({
       href={href}
       onMouseEnter={measure}
       onFocus={measure}
-      className={`group inline-flex items-stretch font-mono text-[11px] uppercase tracking-[0.18em] ${className}`}
+      className={`group inline-flex items-stretch text-[15px] font-bold uppercase tracking-[-0.02em] ${className}`}
       {...rest}
     >
       <span
         ref={arrowRef}
-        className={`flex h-11 w-11 items-center justify-center transition-transform will-change-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-x-[var(--arrow-dx)] group-hover:-translate-y-px group-hover:rotate-2 motion-reduce:transition-none ${tone}`}
+        className={`flex h-11 w-11 items-center justify-center transition-transform will-change-transform duration-[600ms] ease-[cubic-bezier(0.34,1.8,0.5,1)] group-hover:translate-x-[var(--arrow-dx)] group-hover:-translate-y-px group-hover:rotate-3 group-hover:scale-105 group-active:scale-90 motion-reduce:transition-none ${tone}`}
       >
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -49,7 +49,7 @@ export function CtaLink({
       </span>
       <span
         ref={labelRef}
-        className={`ml-px flex items-center px-5 transition-transform will-change-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] [transition-delay:50ms] group-hover:-translate-x-[var(--label-dx)] group-hover:-rotate-2 motion-reduce:transition-none ${tone}`}
+        className={`ml-px flex items-center px-5 transition-transform will-change-transform duration-[600ms] ease-[cubic-bezier(0.34,1.8,0.5,1)] [transition-delay:50ms] group-hover:-translate-x-[var(--label-dx)] group-hover:-rotate-3 group-hover:scale-105 group-active:scale-95 motion-reduce:transition-none ${tone}`}
       >
         {label}
       </span>

@@ -25,13 +25,11 @@
   --color-accent-pink: var(--accent-pink);
   --color-accent-coral: var(--accent-coral);
 
-  /* Switzer for every headline and body use (see src/app/fonts.ts). */
-  --font-display: var(--font-switzer), system-ui, sans-serif;
-  --font-sans: var(--font-switzer), system-ui, sans-serif;
-  /* Instrument Serif — the second voice mixed word-by-word into display headlines. */
-  --font-serif: var(--font-instrument-serif), Georgia, serif;
-  /* Geist Mono for labels/index numbers/timecode only — never body copy. */
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  /* Helvetica Now everywhere; Serrif is the display serif (see src/app/fonts.ts). */
+  --font-display: var(--font-helvetica-now), system-ui, sans-serif;
+  --font-sans: var(--font-helvetica-now), system-ui, sans-serif;
+  --font-serif: var(--font-serrif), Georgia, serif;
+  --font-mono: var(--font-helvetica-now), system-ui, sans-serif;
 }
 
 @layer base {

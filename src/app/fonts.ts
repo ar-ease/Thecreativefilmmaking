@@ -1,34 +1,21 @@
 import localFont from 'next/font/local';
-import { Geist_Mono, Instrument_Serif } from 'next/font/google';
 
 /**
- * Single source of truth for the type system: Switzer for headlines and body copy,
- * Instrument Serif mixed word-by-word into big headlines for contrast, Geist Mono for
- * labels/index numbers/timecode only. To move to licensed replacements (Swizzy for
- * display, PP Neue Montreal Mono for mono), change the `src`/loader below — nothing
- * outside this file needs to change.
+ * Single source of truth for the type system: Helvetica Now (variable) for everything,
+ * Serrif (variable, compressed) as the display serif mixed into big headlines via
+ * `font-serif`. Labels/index numbers (`font-mono`) also resolve to Helvetica Now.
  */
 
-export const display = localFont({
-  variable: '--font-switzer',
+export const sans = localFont({
+  variable: '--font-helvetica-now',
   display: 'swap',
-  src: [
-    { path: '../fonts/switzer/Switzer-Regular.woff2', weight: '400', style: 'normal' },
-    { path: '../fonts/switzer/Switzer-Italic.woff2', weight: '400', style: 'italic' },
-    { path: '../fonts/switzer/Switzer-Medium.woff2', weight: '500', style: 'normal' },
-    { path: '../fonts/switzer/Switzer-Bold.woff2', weight: '700', style: 'normal' },
-  ],
+  src: '../fonts/helvetica-now/HelveticaNowVar.woff2',
+  weight: '100 900',
 });
 
-export const serif = Instrument_Serif({
-  variable: '--font-instrument-serif',
-  subsets: ['latin'],
-  weight: '400',
-  style: ['normal', 'italic'],
-});
-
-export const mono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-  weight: ['400', '500'],
+export const serif = localFont({
+  variable: '--font-serrif',
+  display: 'swap',
+  src: '../fonts/serrif/SerrifCompressedUprightsVF.woff2',
+  weight: '100 900',
 });

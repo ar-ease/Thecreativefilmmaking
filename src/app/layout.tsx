@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Grain } from '@/components/grain';
 import { SmoothScroll } from '@/components/smooth-scroll';
 import { site } from '@content';
-import { display, mono, serif } from './fonts';
+import { sans, serif } from './fonts';
 import './globals.css';
 
 const DESCRIPTION =
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={`${display.variable} ${serif.variable} ${mono.variable}`}>
+    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
       <body>
         <a
           href="#main"
