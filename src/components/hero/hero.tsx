@@ -40,7 +40,7 @@ export function Hero({ content, siteName }: Props) {
   const cueRef = useRef<HTMLDivElement>(null);
   const played = useRef(false);
   const [cueHover, setCueHover] = useState(0);
-  // Headline decorations (smiley, star, ring, badge) come in once the headline has settled.
+  // Headline decorations (smiley, lightning bolt, ring, badge) come in once the headline has settled.
   const [decoOn, setDecoOn] = useState(false);
   useEffect(() => {
     if (phase === 'loading' || phase === null) return;
@@ -179,8 +179,9 @@ export function Hero({ content, siteName }: Props) {
             className="pointer-events-none absolute scale-0 opacity-0 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-data-[on=true]:scale-100 group-data-[on=true]:opacity-100 motion-reduce:transition-none right-0 top-[45%] z-[3] h-12 w-12 origin-center md:-right-6 md:h-[4.5rem] md:w-[4.5rem]"
             aria-hidden="true"
           >
-            <g transform="rotate(14 20 20)">
-              <path d="M20 0c1.5 12 6.5 18.5 20 20-13.5 1.5-18.5 8-20 20C18.5 28 13.5 21.5 0 20 13.5 18.5 18.5 12 20 0Z" className="[transform-box:fill-box] origin-center fill-[#2f6bff]" />
+            <g transform="rotate(-16 20 20)">
+              <path d="M20 1c8-2 12 4 17 8s4 12 2 19-8 12-16 11S6 35 3 26 2 12 9 6c4-3 7-4 11-5Z" fill="#2f6bff" />
+              <path d="M23 6 11 22h8l-3 12 13-17h-8Z" fill="#fde047" stroke="#111" strokeWidth="2" strokeLinejoin="round" />
             </g>
           </svg>
           <svg
@@ -201,7 +202,7 @@ export function Hero({ content, siteName }: Props) {
           </svg>
 
           <div
-            className="absolute -right-3 top-12 z-[3] flex scale-75 items-center gap-2.5 whitespace-nowrap pointer-events-none origin-bottom-left rounded-none bg-yellow-300 px-3.5 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink opacity-0 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-data-[on=true]:-rotate-6 group-data-[on=true]:scale-100 group-data-[on=true]:opacity-100 motion-reduce:transition-none shadow-[0_8px_20px_rgba(0,0,0,0.25)] md:-right-6 md:top-20 md:px-5 md:py-3 md:text-[12.5px]"
+            className="absolute -right-3 top-12 z-[3] flex scale-75 items-center gap-2.5 whitespace-nowrap pointer-events-none origin-bottom-left rounded-none bg-yellow-300 px-3.5 py-2 font-serif text-[15px] font-normal uppercase leading-none tracking-[-0.01em] text-ink opacity-0 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-data-[on=true]:-rotate-6 group-data-[on=true]:scale-100 group-data-[on=true]:opacity-100 motion-reduce:transition-none shadow-[0_8px_20px_rgba(0,0,0,0.25)] md:-right-6 md:top-20 md:px-5 md:py-3 md:text-[20px]"
           >
             <svg
               viewBox="0 0 44 44"

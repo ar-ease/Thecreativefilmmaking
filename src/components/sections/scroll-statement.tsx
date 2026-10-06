@@ -157,7 +157,10 @@ export function ScrollStatement() {
           if (fwd) t = Math.max(t, 1 - smooth(0.45, 1, d));
           else if (back) t = Math.min(t, 1 - smooth(-0.9, 0.45, d));
           drawn[i] = t;
-          draws.forEach((path) => (path.style.strokeDashoffset = `${1 - t}`));
+          draws.forEach((path) => {
+            path.style.strokeDashoffset = `${1 - t}`;
+            path.style.opacity = t > 0.001 ? '1' : '0'; // round caps would paint a dot on a zero-length dash
+          });
           el.querySelectorAll<SVGPathElement>('[data-head]').forEach((h) => {
             h.style.opacity = `${smooth(0.9, 1, t)}`;
           });
@@ -172,6 +175,7 @@ export function ScrollStatement() {
       el.querySelectorAll<SVGPathElement>('[data-draw]').forEach((p) => {
         p.style.strokeDasharray = '1';
         p.style.strokeDashoffset = '1';
+        p.style.opacity = '0';
       });
       el.querySelectorAll<SVGPathElement>('[data-head]').forEach((h) => (h.style.opacity = '0'));
     });
@@ -215,7 +219,8 @@ export function ScrollStatement() {
     const outro = outroRef.current;
     const line = outro?.querySelector<SVGSVGElement>('[data-underline]');
     const pop = outro?.querySelector<HTMLElement>('[data-pop]');
-    if (!outro || !line || !pop) return;
+    const flash = outro?.querySelector<SVGGElement>('[data-flash]');
+    if (!outro || !line || !pop || !flash) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
@@ -228,17 +233,12 @@ export function ScrollStatement() {
           scrollTrigger: { trigger: line, start: 'top 90%', end: 'top 60%', scrub: true },
         },
       );
-      gsap.fromTo(
-        pop,
-        { scale: 0, rotate: -40 },
-        {
-          scale: 1,
-          rotate: 0,
-          ease: 'back.out(2.2)',
-          duration: 0.6,
-          scrollTrigger: { trigger: line, start: 'top 70%', toggleActions: 'play none none reverse' },
-        },
-      );
+      // Camera pops in, then fires its flash; scrolling back rewinds both.
+      gsap
+        .timeline({ scrollTrigger: { trigger: line, start: 'top 70%', toggleActions: 'play none none reverse' } })
+        .fromTo(pop, { scale: 0, rotate: -40 }, { scale: 1, rotate: 0, ease: 'back.out(2.2)', duration: 0.6 })
+        .fromTo(flash, { opacity: 0 }, { opacity: 1, duration: 0.06 }, '+=0.1')
+        .to(flash, { opacity: 0, duration: 0.5, ease: 'power2.out' });
     }, outro);
     return () => ctx.revert();
   }, []);
@@ -307,7 +307,13 @@ export function ScrollStatement() {
           </svg>
           <span data-pop className="absolute -right-6 -top-10 h-20 w-20 rotate-6 md:-right-14 md:-top-20 md:h-36 md:w-36" aria-hidden="true">
             <Sticker bg="var(--accent)" ink="#fde047">
-              <path d="M50 74C30 58 24 46 30 36c6-8 16-6 20 2 4-8 14-10 20-2 6 10 0 22-20 36Z" />
+              <rect x="20" y="36" width="60" height="40" rx="7" />
+              <path d="M38 36l4-8h16l4 8" />
+              <circle cx="50" cy="56" r="11" />
+              <g data-flash opacity="0">
+                <circle cx="50" cy="56" r="7" fill="#fff" stroke="none" />
+                <path d="M72 24l4-8M82 30l8-4M86 42l8 2M14 22l-6-6M24 14l-2-8" stroke="#fff" />
+              </g>
             </Sticker>
           </span>
         </div>
