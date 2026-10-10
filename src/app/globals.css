@@ -145,7 +145,71 @@
   76% { transform: rotate(0); }
 }
 
-/* CtaLink: both halves pop (scale up and settle back) mid-swap, same vertical position. */
-@keyframes cta-pop {
-  50% { transform: scale(1.08); }
+/* CtaLink, motion technique adapted from extrafazant.nl's button. */
+.cta {
+  --cta-h: 2.75rem;
+  --cta-ease-hover: linear(0, 0.5737 7.6%, 0.8382 11.87%, 0.9463 14.19%, 1.0292 16.54%, 1.0886 18.97%, 1.1258 21.53%, 1.137 22.97%, 1.1424 24.48%, 1.1423 26.1%, 1.1366 27.86%, 1.1165 31.01%, 1.0507 38.62%, 1.0219 42.57%, 0.9995 46.99%, 0.9872 51.63%, 0.9842 58.77%, 1.0011 81.26%, 1);
+  --cta-ease-soft: cubic-bezier(0.59, 1, 0.88, 1.01);
+  --cta-ease-bounce: cubic-bezier(0.34, 2.27, 0.64, 1);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: var(--cta-h);
+  gap: 1px;
+  line-height: 1;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.cta:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.cta__icon { display: grid; place-items: center; aspect-ratio: 1; height: 100%; pointer-events: none; }
+.cta__icon.is-hover { position: absolute; top: 0.15em; right: 0; scale: 0; opacity: 0; transition: scale 0.75s var(--cta-ease-hover), opacity 0.15s 0.1s ease-out; }
+.cta__icon.is-default { transition: scale 0.75s var(--cta-ease-hover), opacity 0.15s ease-out; }
+.cta__text {
+  position: relative; z-index: 1; display: flex; align-items: center; height: 100%; padding: 0 1.25rem;
+  transform-origin: right center; /* pop/tilt grow leftwards so the gap to the right arrow box never closes */
+  will-change: transform;
+  transition: translate 0.8s var(--cta-ease-hover), rotate 0.8s var(--cta-ease-hover), scale 0.15s var(--cta-ease-soft), transform 0.15s var(--cta-ease-soft);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  /* scale dips to ~0.93 quickly while transform pops 1 -> ~1.07 late with a bounce: net is a squash, then an overshoot pop back to full size. */
+  .cta:is(:hover, :focus-visible) .cta__text {
+    translate: calc(var(--cta-h) * -1 - 8px) -0.3em 0;
+    rotate: -3deg;
+    scale: 0.935 0.905;
+    transform: scale(1.0695187166, 1.1049723757);
+    transition: translate 0.8s 0.05s var(--cta-ease-hover), rotate 0.8s 0.05s var(--cta-ease-hover), scale 0.15s 0.05s var(--cta-ease-soft), transform 0.45s 0.2s var(--cta-ease-bounce);
+  }
+  .cta:is(:hover, :focus-visible) .cta__icon.is-default { scale: 0; opacity: 0; transition: scale 0.75s 0.05s var(--cta-ease-hover), opacity 0.15s 0.2s ease-out; }
+  .cta:is(:hover, :focus-visible) .cta__icon.is-hover { scale: 1; opacity: 1; transition: scale 0.75s 0.1s var(--cta-ease-hover), opacity 0.15s ease-out; }
+}
+
+/* Nav "Contact" button, motion technique adapted from extrafazant.nl: dots fan in, label rolls up, button grows. */
+.nav-contact {
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  position: relative;
+  line-height: 1;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: scale 0.45s var(--ease);
+}
+.nav-contact:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.nav-contact__bg { grid-area: 1 / 1; width: 100%; height: 100%; background: var(--color-paper); }
+.nav-contact__inner { grid-area: 1 / 1; display: flex; align-items: center; justify-content: center; gap: 0.375em; padding: 0.75em 1em 0.75em 0.75em; overflow: clip; }
+.nav-contact__dots, .nav-contact__texts { display: grid; }
+.nav-contact__dots i { grid-area: 1 / 1; width: 0.5em; height: 0.5em; border-radius: 50%; background: var(--color-accent); transform-origin: calc((100% + 0.25em) * -1) 50%; transition: rotate 0.45s var(--ease), scale 0.45s var(--ease); transition-delay: calc(var(--i, 0) * 0.032s); }
+.nav-contact__dots i.is-first { --i: 0; background: var(--color-ink); z-index: 3; }
+.nav-contact__dots i.is-second { --i: 1; background: var(--color-accent); z-index: 2; }
+.nav-contact__dots i.is-third { --i: 2; background: var(--color-ink); z-index: 1; }
+.nav-contact__dots i:not(:first-child) { rotate: 120deg; scale: 0; }
+.nav-contact__text { grid-area: 1 / 1; transform-origin: left center; transition: translate 0.45s var(--ease), rotate 0.45s var(--ease); }
+.nav-contact__text.is-hover { rotate: 75deg; translate: -0.75em 2em; }
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .nav-contact:is(:hover, :focus-visible) { scale: var(--sx, 1) var(--sy, 1); transition: scale 0.45s 0.05s var(--ease); }
+  .nav-contact:is(:hover, :focus-visible) .nav-contact__text { transition-delay: 0.05s; }
+  .nav-contact:is(:hover, :focus-visible) .nav-contact__text.is-default { rotate: -75deg; translate: -0.75em -2em; }
+  .nav-contact:is(:hover, :focus-visible) .nav-contact__text.is-hover { rotate: 0deg; translate: 0 0; }
+  .nav-contact:is(:hover, :focus-visible) .nav-contact__dots i:first-child { rotate: -120deg; scale: 0; transition-delay: 0.05s; }
+  .nav-contact:is(:hover, :focus-visible) .nav-contact__dots i:not(:first-child) { rotate: 0deg; scale: 1; transition-delay: calc(var(--i, 0) * 0.032s + 0.05s); }
 }

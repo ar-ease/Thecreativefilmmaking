@@ -20,6 +20,7 @@ type Props = {
 
 const SESSION_KEY = 'tcf-intro-seen';
 const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
+const RISE = 'power4.out';
 
 function shouldBypassIntro() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
@@ -88,9 +89,9 @@ export function Hero({ content, siteName }: Props) {
     gsap
       .timeline({ delay: 0.12 })
       .to(scrimRef.current, { opacity: 1, duration: 1, ease: EASE }, 0)
-      .to(eyebrowRef.current, { opacity: 1, filter: 'blur(0px)', y: 0, duration: 0.7, ease: EASE }, 0.1)
-      .to(lines, { opacity: 1, filter: 'blur(0px)', y: 0, duration: 0.8, ease: EASE, stagger: 0.08 }, 0.18)
-      .to(cueRef.current, { opacity: 1, filter: 'blur(0px)', y: 0, duration: 0.6, ease: EASE }, 0.5);
+      .to(eyebrowRef.current, { opacity: 1, y: 0, duration: 1, ease: RISE }, 0.1)
+      .to(lines, { y: 0, duration: 1.1, ease: RISE, stagger: 0.09 }, 0.18)
+      .to(cueRef.current, { opacity: 1, y: 0, duration: 0.9, ease: RISE }, 0.55);
   }, [phase]);
 
   // Play the single accent clip once the entrance has settled.
@@ -134,7 +135,7 @@ export function Hero({ content, siteName }: Props) {
         <div className="my-auto flex flex-col items-center">
           <p
             ref={eyebrowRef}
-            className="m-0 translate-y-2 whitespace-pre-line text-center font-serif text-[32px] font-medium leading-tight text-paper/80 opacity-0 blur-md motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:blur-none md:text-[clamp(28px,6.2svh,46px)]"
+            className="m-0 translate-y-8 whitespace-pre-line text-center font-serif text-[32px] font-medium leading-tight text-paper/80 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100 md:text-[clamp(28px,6.2svh,46px)]"
           >
             {content.eyebrow}
           </p>
@@ -147,16 +148,17 @@ export function Hero({ content, siteName }: Props) {
               {content.lines.map((line, i) => {
                 const isSerif = i === content.lines.length - 1;
                 return (
-                  <span
-                    key={line}
-                    ref={(el) => {
-                      linesRef.current[i] = el;
-                    }}
-                    className={`block translate-y-[0.12em] opacity-0 blur-md will-change-transform motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:blur-none ${
-                      isSerif ? 'font-serif font-normal not-italic' : 'font-display font-bold'
-                    }`}
-                  >
-                    {line}
+                  <span key={line} className="-mb-[0.1em] block overflow-hidden pb-[0.1em]">
+                    <span
+                      ref={(el) => {
+                        linesRef.current[i] = el;
+                      }}
+                      className={`block translate-y-[130%] will-change-transform motion-reduce:translate-y-0 ${
+                        isSerif ? 'font-serif font-normal not-italic' : 'font-display font-bold'
+                      }`}
+                    >
+                      {line}
+                    </span>
                   </span>
                 );
               })}
@@ -244,7 +246,7 @@ export function Hero({ content, siteName }: Props) {
         <div
           ref={cueRef}
           onMouseEnter={() => setCueHover((n) => n + 1)}
-          className="mt-6 flex translate-y-2 flex-col items-center gap-2 opacity-0 blur-md motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:blur-none md:mt-8"
+          className="mt-6 flex translate-y-8 flex-col items-center gap-2 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100 md:mt-8"
           aria-hidden="true"
         >
           <div className="flex items-center gap-3">

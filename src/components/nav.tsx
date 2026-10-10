@@ -8,6 +8,7 @@ import { Logo } from './logo';
 import { useLenis } from './smooth-scroll';
 
 const LINKS = [
+  { href: '/', label: 'Home' },
   { href: '/studio', label: 'About' },
   { href: '/work', label: 'Work' },
   { href: '/services', label: 'Services' },
@@ -61,6 +62,13 @@ function SquiggleLink({
   );
 }
 
+// The button grows by a fixed 12x6px on hover; scale factors depend on its rendered size.
+const growTo = (e: React.SyntheticEvent<HTMLElement>) => {
+  const el = e.currentTarget;
+  el.style.setProperty('--sx', String((el.offsetWidth + 12) / el.offsetWidth));
+  el.style.setProperty('--sy', String((el.offsetHeight + 6) / el.offsetHeight));
+};
+
 export function Nav() {
   const pathname = usePathname();
   const lenis = useLenis();
@@ -92,10 +100,23 @@ export function Nav() {
 
           <Link
             href="/contact"
-            className="hidden items-center gap-2 rounded-none bg-paper py-2 pl-3 pr-4 text-ink shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition-colors duration-300 hover:text-accent md:flex"
+            onPointerEnter={growTo}
+            onFocus={growTo}
+            className={`${navLabel} nav-contact hidden bg-transparent text-ink md:inline-grid`}
           >
-            <span className="h-2 w-2 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-            <span className={navLabel}>Contact</span>
+            <span className="nav-contact__bg" />
+            <span className="nav-contact__inner">
+              <span className="nav-contact__dots" aria-hidden="true">
+                <i />
+                <i className="is-first" />
+                <i className="is-second" />
+                <i className="is-third" />
+              </span>
+              <span className="nav-contact__texts">
+                <span className="nav-contact__text is-default">Contact</span>
+                <span aria-hidden="true" className="nav-contact__text is-hover">Contact</span>
+              </span>
+            </span>
           </Link>
 
           <button

@@ -58,13 +58,8 @@ export function IntroLoader({ label, name, duration = 1500, onDone }: Props) {
       onDone();
       return;
     }
-    gsap.to(el, {
-      clipPath: 'inset(0 0 0 100%)',
-      duration: 0.62,
-      delay: 0.18,
-      ease: 'cubic-bezier(.65,0,.25,1)',
-      onComplete: onDone,
-    });
+    // Curtain lifts off the top, leaving the hero to rise in from below.
+    gsap.to(el, { yPercent: -100, duration: 0.9, delay: 0.18, ease: 'power4.inOut', onComplete: onDone });
   }, [exiting, onDone]);
 
   const chars = Math.round((progress / 100) * label.length);
@@ -72,7 +67,7 @@ export function IntroLoader({ label, name, duration = 1500, onDone }: Props) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[95] grid place-items-center bg-[#050505] p-6 text-paper [clip-path:inset(0_0_0_0)]"
+      className="fixed inset-0 z-[95] grid place-items-center bg-[#050505] p-6 text-paper"
       aria-hidden="true"
     >
       <div className="flex w-[min(230px,100%)] flex-col items-center gap-3">
@@ -110,6 +105,7 @@ export function IntroLoader({ label, name, duration = 1500, onDone }: Props) {
           />
         </div>
       </div>
+      <div className="absolute inset-x-0 top-full h-[10vh] rounded-b-[50%_100%] bg-[#050505]" />
     </div>
   );
 }

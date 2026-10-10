@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { CtaLink } from '../cta-link';
+import { ScribbleLink } from '../scribble-link';
 import { useScrollReveal } from '../scroll-reveal';
 
 const SERVICES = [
@@ -84,7 +84,7 @@ export function About() {
         </div>
 
         <div data-reveal className="mt-14 flex justify-center md:mt-14">
-          <CtaLink href="/services" label="Discover more" tone="bg-accent text-ink" />
+          <ScribbleLink href="/services" label="Discover more" />
         </div>
       </div>
     </section>

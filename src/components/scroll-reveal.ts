@@ -3,9 +3,7 @@
 import { useLayoutEffect, type RefObject } from 'react';
 import { gsap } from 'gsap';
 
-const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
-
-/** Fades/blurs in every `selector` match inside `containerRef` the first time it scrolls into view. */
+/** Rises from below and fades in every `selector` match inside `containerRef` the first time it scrolls into view. */
 export function useScrollReveal(containerRef: RefObject<Element | null>, selector: string) {
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -15,13 +13,12 @@ export function useScrollReveal(containerRef: RefObject<Element | null>, selecto
     const targets = container.querySelectorAll(selector);
     if (!targets.length) return;
 
-    gsap.set(targets, { opacity: 0, y: 28, filter: 'blur(10px)' });
+    gsap.set(targets, { opacity: 0, y: 64 });
     const tween = gsap.to(targets, {
       opacity: 1,
       y: 0,
-      filter: 'blur(0px)',
-      duration: 0.9,
-      ease: EASE,
+      duration: 1.1,
+      ease: 'power4.out',
       stagger: 0.08,
       scrollTrigger: { trigger: container, start: 'top 82%', once: true },
     });
