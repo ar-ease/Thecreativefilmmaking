@@ -5,7 +5,7 @@ import { useRef } from 'react';
 
 const GAP = 10;
 
-// Arrow | label button. On hover the two halves split: the label tilts to the left, the arrow slides to the right.
+// Arrow | label button. On hover the halves swap places: label ends on the left, tilted; arrow ends on the right. Both pop (scale up, settle back) mid-swap, staying at the same height.
 export function CtaLink({
   href,
   label,
@@ -41,7 +41,7 @@ export function CtaLink({
     >
       <span
         ref={arrowRef}
-        className={`flex h-11 w-11 items-center justify-center transition-transform will-change-transform duration-[600ms] ease-[cubic-bezier(0.34,1.8,0.5,1)] group-hover:translate-x-[var(--arrow-dx)] group-hover:-translate-y-px group-hover:rotate-3 group-hover:scale-105 group-active:scale-90 motion-reduce:transition-none ${tone}`}
+        className={`flex h-11 w-11 items-center justify-center transition-transform will-change-transform duration-[650ms] ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-x-[var(--arrow-dx)] group-hover:animate-[cta-pop_650ms_ease-in-out] group-hover:rotate-2 group-active:scale-[0.96] motion-reduce:transition-none ${tone}`}
       >
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -49,7 +49,7 @@ export function CtaLink({
       </span>
       <span
         ref={labelRef}
-        className={`ml-px flex items-center px-5 transition-transform will-change-transform duration-[600ms] ease-[cubic-bezier(0.34,1.8,0.5,1)] [transition-delay:50ms] group-hover:-translate-x-[var(--label-dx)] group-hover:-rotate-3 group-hover:scale-105 group-active:scale-95 motion-reduce:transition-none ${tone}`}
+        className={`ml-px flex items-center px-5 transition-transform will-change-transform duration-[650ms] ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-x-[var(--label-dx)] group-hover:animate-[cta-pop_650ms_ease-in-out] group-hover:-rotate-2 group-active:scale-[0.97] motion-reduce:transition-none ${tone}`}
       >
         {label}
       </span>

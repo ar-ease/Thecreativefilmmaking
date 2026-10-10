@@ -95,8 +95,6 @@ const DECOR_BOX: Record<keyof typeof DECOR_NODE, string> = {
 export function ScrollStatement() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const outroRef = useRef<HTMLDivElement>(null);
-  useScrollReveal(outroRef, '[data-reveal]');
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -214,35 +212,6 @@ export function ScrollStatement() {
     };
   }, []);
 
-  // Outro: underline sketches in with scroll, heart sticker pops in (and back out) with scroll.
-  useLayoutEffect(() => {
-    const outro = outroRef.current;
-    const line = outro?.querySelector<SVGSVGElement>('[data-underline]');
-    const pop = outro?.querySelector<HTMLElement>('[data-pop]');
-    const flash = outro?.querySelector<SVGGElement>('[data-flash]');
-    if (!outro || !line || !pop || !flash) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        line,
-        { clipPath: 'inset(-20% 100% -20% 0)' }, // wipes left→right like a pen stroke
-        {
-          clipPath: 'inset(-20% 0% -20% 0)',
-          ease: 'none',
-          scrollTrigger: { trigger: line, start: 'top 90%', end: 'top 60%', scrub: true },
-        },
-      );
-      // Camera pops in, then fires its flash; scrolling back rewinds both.
-      gsap
-        .timeline({ scrollTrigger: { trigger: line, start: 'top 70%', toggleActions: 'play none none reverse' } })
-        .fromTo(pop, { scale: 0, rotate: -40 }, { scale: 1, rotate: 0, ease: 'back.out(2.2)', duration: 0.6 })
-        .fromTo(flash, { opacity: 0 }, { opacity: 1, duration: 0.06 }, '+=0.1')
-        .to(flash, { opacity: 0, duration: 0.5, ease: 'power2.out' });
-    }, outro);
-    return () => ctx.revert();
-  }, []);
-
   const words = HEADLINE.split(' ');
 
   return (
@@ -286,7 +255,45 @@ export function ScrollStatement() {
           {BODY}
         </p>
       </section>
+    </div>
+  );
+}
 
+export function StudioOutro() {
+  const outroRef = useRef<HTMLDivElement>(null);
+  useScrollReveal(outroRef, '[data-reveal]');
+
+  // Outro: underline sketches in with scroll, heart sticker pops in (and back out) with scroll.
+  useLayoutEffect(() => {
+    const outro = outroRef.current;
+    const line = outro?.querySelector<SVGSVGElement>('[data-underline]');
+    const pop = outro?.querySelector<HTMLElement>('[data-pop]');
+    const flash = outro?.querySelector<SVGGElement>('[data-flash]');
+    if (!outro || !line || !pop || !flash) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        line,
+        { clipPath: 'inset(-20% 100% -20% 0)' }, // wipes left→right like a pen stroke
+        {
+          clipPath: 'inset(-20% 0% -20% 0)',
+          ease: 'none',
+          scrollTrigger: { trigger: line, start: 'top 90%', end: 'top 60%', scrub: true },
+        },
+      );
+      // Camera pops in, then fires its flash; scrolling back rewinds both.
+      gsap
+        .timeline({ scrollTrigger: { trigger: line, start: 'top 70%', toggleActions: 'play none none reverse' } })
+        .fromTo(pop, { scale: 0, rotate: -40 }, { scale: 1, rotate: 0, ease: 'back.out(2.2)', duration: 0.6 })
+        .fromTo(flash, { opacity: 0 }, { opacity: 1, duration: 0.06 }, '+=0.1')
+        .to(flash, { opacity: 0, duration: 0.5, ease: 'power2.out' });
+    }, outro);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div className="relative z-10 bg-paper text-ink">
       <div ref={outroRef} className="section-pad px-6 text-center md:px-10">
         <p data-reveal className="mx-auto max-w-[12ch] text-[clamp(3rem,9vw,8rem)] font-bold lowercase leading-[0.9] tracking-[-0.04em]">
           a studio built for the feel,

@@ -144,3 +144,8 @@
   62% { transform: rotate(-26deg); }
   76% { transform: rotate(0); }
 }
+
+/* CtaLink: both halves pop (scale up and settle back) mid-swap, same vertical position. */
+@keyframes cta-pop {
+  50% { transform: scale(1.08); }
+}
