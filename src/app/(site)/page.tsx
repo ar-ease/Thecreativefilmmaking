@@ -1,6 +1,7 @@
 import { About } from '@/components/sections/about';
 import { Hero } from '@/components/hero/hero';
 import { ScrollStatement, StudioOutro } from '@/components/sections/scroll-statement';
+import { PhotoFrames } from '@/components/sections/photo-frames';
 import { Faq } from '@/components/sections/faq';
 import { FeaturedWork } from '@/components/sections/featured-work';
 import {
@@ -18,6 +19,7 @@ export default function Home() {
       <FeaturedWork />
       <About />
       <StudioOutro />
+      <PhotoFrames />
       <Faq items={faq} />
     </>
   );

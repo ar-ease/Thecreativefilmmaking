@@ -84,7 +84,7 @@ export function FeaturedWork() {
             <span className="block text-[clamp(3rem,9vw,8rem)] font-bold lowercase leading-[0.9] tracking-[-0.04em]">
               quiet moments,
             </span>
-            <span className="relative mx-auto mt-2 block w-fit font-serif text-[clamp(3rem,9vw,8rem)] italic leading-[1] tracking-[-0.02em]">
+            <span className="relative mx-auto mt-2 block w-fit font-serif text-[clamp(3rem,9vw,8rem)] font-light leading-[1] tracking-[-0.02em]">
               loud memories.
               <svg data-underline viewBox="0 0 400 24" preserveAspectRatio="none" className="mt-1 h-5 w-full overflow-visible text-paper md:h-7" aria-hidden="true">
                 <path
@@ -100,7 +100,7 @@ export function FeaturedWork() {
           </h2>
         </div>
 
-        <div data-reveal className="mx-auto mt-10 w-full max-w-[1040px] -rotate-1 bg-[#d8cfc0] p-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] md:mt-12 md:p-5">
+        <div data-reveal className="mx-auto mt-8 w-full max-w-[1040px] -rotate-1 bg-[#d8cfc0] p-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] md:mt-12 md:p-5">
         <div className="group relative aspect-video w-full overflow-hidden bg-[#181818]">
           {/* ponytail: placeholder clip, swap src/poster for the real intro */}
           <video
@@ -135,7 +135,7 @@ export function FeaturedWork() {
         </div>
         </div>
 
-        <div data-reveal className="mt-8 flex items-start justify-center md:mt-10">
+        <div data-reveal className="mt-8 flex items-start justify-center md:mt-12">
           <CtaLink href="/work" label="See our work" tone="bg-accent text-ink" />
         </div>
       </div>

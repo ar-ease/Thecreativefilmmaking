@@ -135,11 +135,12 @@ export function ScrollStatement() {
       const x = s - smooth(0, 1, p) * (s + trackW - vw * 0.92); // stops with the last word fully in view
       track.style.transform = `translate3d(${x}px,0,0)`;
       letters.forEach((l, i) => {
-        // Only letters still arriving on the right are scattered; once placed they stay straight.
+        // Only letters still arriving at the right edge are scattered; they land straight well before the
+        // reading area. Kept small (0.35em / 12deg): bigger throws read as a rendering glitch mid-screen.
         const d = (x + base[i] + widths[i] / 2 - vw / 2) / (vw / 2);
-        const s = smooth(0.35, 1.1, d) * (1 - smooth(0.7, 1, p)); // the last word lands straight
+        const s = smooth(0.6, 1.1, d) * (1 - smooth(0.7, 1, p)); // the last word lands straight
         l.style.transform = s
-          ? `translate3d(0,${rand(i, 1) * em * 0.9 * s}px,0) rotate(${rand(i, 2) * 22 * s}deg)`
+          ? `translate3d(0,${rand(i, 1) * em * 0.35 * s}px,0) rotate(${rand(i, 2) * 12 * s}deg)`
           : '';
       });
       stickers.forEach((el, i) => {
@@ -218,7 +219,7 @@ export function ScrollStatement() {
     <div className="relative z-10 bg-paper text-ink">
       <section
         ref={sectionRef}
-        className="group relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 data-[scrub]:block data-[scrub]:p-0"
+        className="group relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-16 data-[scrub]:block data-[scrub]:p-0"
         aria-labelledby="scroll-statement"
       >
         <h2
@@ -299,7 +300,7 @@ export function StudioOutro() {
           a studio built for the feel,
         </p>
         <div data-reveal className="relative mx-auto mt-2 w-fit">
-          <p className="m-0 font-serif text-[clamp(3rem,9vw,8rem)] italic leading-[1] tracking-[-0.02em]">
+          <p className="m-0 font-serif text-[clamp(3rem,9vw,8rem)] font-light leading-[1] tracking-[-0.02em]">
             from script to screen.
           </p>
           <svg data-underline viewBox="0 0 400 24" preserveAspectRatio="none" className="mt-1 h-5 w-full overflow-visible md:h-7" aria-hidden="true">

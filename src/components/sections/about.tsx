@@ -36,9 +36,9 @@ export function About() {
   useScrollReveal(ref, '[data-reveal]');
 
   return (
-    <section className="section-pad border-t border-line-on-paper bg-paper px-6 text-ink md:px-10">
+    <section className="pb-8 pt-16 md:pt-32 border-t border-line-on-paper bg-paper px-6 text-ink md:px-10">
       <div ref={ref} className="mx-auto max-w-[1440px] text-center">
-        <p data-reveal className="font-serif text-[18px] italic text-ink/70 md:text-[24px]">
+        <p data-reveal className="font-serif text-[18px] text-ink/70 md:text-[24px]">
           Services
         </p>
         <h2
@@ -70,7 +70,7 @@ export function About() {
                   preload="metadata"
                   className="aspect-[4/5] w-full bg-ink object-cover"
                 />
-                <figcaption className="mt-5">
+                <figcaption className="mt-6">
                   <p className="font-display text-[44px] font-bold uppercase leading-[0.9] tracking-[-0.04em] md:text-[clamp(30px,3.4vw,56px)]">
                     {s.title}
                   </p>
@@ -83,7 +83,7 @@ export function About() {
           ))}
         </div>
 
-        <div data-reveal className="mt-14 flex justify-center md:mt-14">
+        <div data-reveal className="mt-12 flex justify-center">
           <ScribbleLink href="/services" label="Discover more" />
         </div>
       </div>

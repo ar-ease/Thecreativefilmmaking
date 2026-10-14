@@ -39,7 +39,7 @@ export function EmailCapture({ variant = 'full', className = '' }: Props) {
   if (status === 'success') {
     return (
       <div className={`w-full ${className}`} role="status" aria-live="polite">
-        <p className={`font-display italic text-paper ${isFull ? 'text-[30px] leading-tight' : 'text-[17px]'}`}>
+        <p className={`font-display text-paper ${isFull ? 'text-[30px] leading-tight' : 'text-[17px]'}`}>
           You&rsquo;re on the list.
         </p>
         <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">

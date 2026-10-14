@@ -5,11 +5,21 @@ import { gsap } from 'gsap';
 import type { Hero as HeroContent } from '@content';
 import { IntroLoader } from './intro-loader';
 
-const CUE_SQUIGGLES = [
-  'M2 6c10-8 20 6 30-2s20 6 30-2 20 6 26-1',
-  'M2 5c6-4 10 4 16 0s10 4 16 0 10 4 16 0 10 4 16 0 10 4 6 1',
-  'M2 6c14-9 26 9 40 0s28 7 46-2',
-] as const;
+// Thin hand-drawn icons (viewBox 0 0 32 32) for the trust row.
+const TRUST = [
+  {
+    title: 'Pro-grade gear',
+    icon: 'M3 11c0-1 1-2 2-2h3l2-3h8l2 3h5c1 0 2 1 2 2v13c0 1-1 2-2 2H5c-1 0-2-1-2-2Zm13 3a5 5 0 1 0 .1 0Z',
+  },
+  {
+    title: 'Industry-standard tools',
+    icon: 'M3 8h26M3 16h26M3 24h26M9 5v6M20 13v6M14 21v6',
+  },
+  {
+    title: 'Human-made, AI-assisted',
+    icon: 'M13 6c1 6 3 9 9 10-6 1-8 4-9 10-1-6-3-9-9-10 6-1 8-4 9-10ZM25 3v7M21.5 6.5h7',
+  },
+];
 
 type Phase = 'loading' | 'landing' | 'ready';
 
@@ -36,11 +46,10 @@ export function Hero({ content, siteName }: Props) {
   const ref = useRef<HTMLElement>(null);
   const eyebrowRef = useRef<HTMLParagraphElement>(null);
   const linesRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const trustRef = useRef<HTMLUListElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const scrimRef = useRef<HTMLDivElement>(null);
-  const cueRef = useRef<HTMLDivElement>(null);
   const played = useRef(false);
-  const [cueHover, setCueHover] = useState(0);
   // Headline decorations (smiley, lightning bolt, ring, badge) come in once the headline has settled.
   const [decoOn, setDecoOn] = useState(false);
   useEffect(() => {
@@ -91,7 +100,7 @@ export function Hero({ content, siteName }: Props) {
       .to(scrimRef.current, { opacity: 1, duration: 1, ease: EASE }, 0)
       .to(eyebrowRef.current, { opacity: 1, y: 0, duration: 1, ease: RISE }, 0.1)
       .to(lines, { y: 0, duration: 1.1, ease: RISE, stagger: 0.09 }, 0.18)
-      .to(cueRef.current, { opacity: 1, y: 0, duration: 0.9, ease: RISE }, 0.55);
+      .to(trustRef.current, { opacity: 1, y: 0, duration: 0.9, ease: RISE }, 0.55);
   }, [phase]);
 
   // Play the single accent clip once the entrance has settled.
@@ -154,7 +163,7 @@ export function Hero({ content, siteName }: Props) {
                         linesRef.current[i] = el;
                       }}
                       className={`block translate-y-[130%] will-change-transform motion-reduce:translate-y-0 ${
-                        isSerif ? 'font-serif font-normal not-italic' : 'font-display font-bold'
+                        isSerif ? 'font-serif font-light' : 'font-display font-bold'
                       }`}
                     >
                       {line}
@@ -204,82 +213,21 @@ export function Hero({ content, siteName }: Props) {
                 className="opacity-0 transition-[stroke-dashoffset] duration-[2600ms] ease-[cubic-bezier(0.45,0,0.3,1)] [stroke-dasharray:2000] [stroke-dashoffset:2000] group-data-[on=true]:opacity-100 group-data-[on=true]:[stroke-dashoffset:0] motion-reduce:transition-none"
               />
             </svg>
-
-            <div
-              className="absolute -right-3 top-12 z-[3] flex scale-75 items-center gap-2.5 whitespace-nowrap pointer-events-none origin-bottom-left rounded-none bg-yellow-300 px-3.5 py-2 font-serif text-[15px] font-normal uppercase leading-none tracking-[-0.01em] text-ink opacity-0 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-data-[on=true]:-rotate-6 group-data-[on=true]:scale-100 group-data-[on=true]:opacity-100 motion-reduce:transition-none shadow-[0_8px_20px_rgba(0,0,0,0.25)] md:-right-6 md:top-20 md:px-5 md:py-3 md:text-[20px]"
-            >
-              <svg
-                viewBox="0 0 44 44"
-                className="-my-7 -ml-8 h-14 w-14 shrink-0 overflow-visible -rotate-6 drop-shadow-[0_6px_4px_rgba(0,0,0,0.5)] md:-my-9 md:-ml-10 md:h-[4.5rem] md:w-[4.5rem]"
-                aria-hidden="true"
-              >
-                <defs>
-                  <linearGradient id="clap-body" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stopColor="#3a3a3a" />
-                    <stop offset="1" stopColor="#0b0b0b" />
-                  </linearGradient>
-                  <linearGradient id="clap-arm" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stopColor="#4a4a4a" />
-                    <stop offset="1" stopColor="#141414" />
-                  </linearGradient>
-                  <clipPath id="clap-arm-clip">
-                    <rect x="4" y="8" width="36" height="9" rx="1.5" />
-                  </clipPath>
-                </defs>
-                <rect x="4" y="17" width="36" height="22" rx="2" fill="url(#clap-body)" />
-                <rect x="4" y="17" width="36" height="2.5" fill="#000" opacity="0.5" />
-                <path d="M9 25h26M9 30h18M9 35h22" stroke="#fde047" strokeWidth="1.6" strokeLinecap="round" opacity="0.9" />
-                <path d="M5 38.5h34" stroke="#fff" strokeWidth="0.8" opacity="0.18" />
-                <g className="[transform-box:view-box] [transform-origin:4px_17px] group-data-[on=true]:animate-[clap_4.5s_ease-in-out_infinite] motion-reduce:animate-none">
-                  <rect x="4" y="8" width="36" height="9" rx="1.5" fill="url(#clap-arm)" />
-                  <g clipPath="url(#clap-arm-clip)" fill="#fef9c3">
-                    <path d="M8 17l5-9h5l-5 9ZM20 17l5-9h5l-5 9ZM32 17l5-9h5l-5 9Z" />
-                  </g>
-                  <rect x="4" y="8" width="36" height="2" rx="1" fill="#fff" opacity="0.28" />
-                </g>
-              </svg>
-              The Creative Film
-            </div>
           </div>
         </div>
-
-        <div
-          ref={cueRef}
-          onMouseEnter={() => setCueHover((n) => n + 1)}
-          className="mt-6 flex translate-y-8 flex-col items-center gap-2 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100 md:mt-8"
-          aria-hidden="true"
+        <ul
+          ref={trustRef}
+          className="mt-6 flex translate-y-8 flex-col items-center gap-3 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100 md:mt-8 md:flex-row md:gap-0"
         >
-          <div className="flex items-center gap-3">
-            <span className="font-serif text-[16px] italic text-paper md:text-[18px]">Scroll to explore</span>
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-accent text-paper">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path
-                  d="M7 1v12M2 8l5 5 5-5"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+          {TRUST.map((t) => (
+            <li key={t.title} className="flex items-center gap-2.5 text-paper/85 md:px-8 md:[&:not(:first-child)]:border-l md:[&:not(:first-child)]:border-paper/20">
+              <svg width="22" height="22" viewBox="0 0 32 32" fill="none" className="shrink-0 text-paper/55" aria-hidden="true">
+                <path d={t.icon} stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </span>
-          </div>
-          <svg
-            key={cueHover}
-            width="90"
-            height="10"
-            viewBox="0 0 90 10"
-            fill="none"
-            className={`text-accent ${cueHover ? 'animate-[squiggle-draw_0.4s_var(--ease-out)_both] motion-reduce:animate-none' : ''}`}
-          >
-            <path
-              d={CUE_SQUIGGLES[cueHover % CUE_SQUIGGLES.length]}
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              fill="none"
-            />
-          </svg>
-        </div>
+              <span className="font-display text-[11px] font-medium uppercase leading-tight tracking-[0.14em]">{t.title}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

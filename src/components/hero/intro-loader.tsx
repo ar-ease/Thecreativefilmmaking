@@ -8,19 +8,6 @@ type Props = {
   onDone: () => void;
 };
 
-function Bracket({ flip = false }: { flip?: boolean }) {
-  return (
-    <svg
-      viewBox="0 0 12 60"
-      className="h-[60px] w-3 flex-none text-paper"
-      style={flip ? { transform: 'scaleX(-1)' } : undefined}
-      aria-hidden="true"
-    >
-      <path d="M11 1H1v58h10" fill="none" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  );
-}
-
 export function IntroLoader({ label, name, duration = 1500, onDone }: Props) {
   const [progress, setProgress] = useState(0);
   const [exiting, setExiting] = useState(false);
@@ -62,49 +49,34 @@ export function IntroLoader({ label, name, duration = 1500, onDone }: Props) {
     gsap.to(el, { yPercent: -100, duration: 0.9, delay: 0.18, ease: 'power4.inOut', onComplete: onDone });
   }, [exiting, onDone]);
 
-  const chars = Math.round((progress / 100) * label.length);
-
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[95] grid place-items-center bg-[#050505] p-6 text-paper"
+      className="fixed inset-0 z-[95] overflow-hidden bg-[#050505] text-paper"
       aria-hidden="true"
     >
-      <div className="flex w-[min(230px,100%)] flex-col items-center gap-3">
-        <div className="flex h-[60px] w-full items-center text-paper">
-          <Bracket flip />
-          <svg
-            viewBox="0 0 42 42"
-            className="mx-1 h-[30px] w-[30px] animate-spin [animation-duration:2s] [animation-timing-function:linear]"
-            aria-hidden="true"
-          >
-            <circle cx="21" cy="6" r="4.5" fill="currentColor" />
-            <circle cx="34" cy="28.5" r="4.5" fill="currentColor" />
-            <circle cx="8" cy="28.5" r="4.5" fill="currentColor" />
-          </svg>
-          <Bracket />
-          <span className="w-4 flex-none" />
-          <Bracket flip />
-          <span
-            className="block overflow-hidden whitespace-nowrap font-mono text-[11px] font-light uppercase leading-tight"
-            style={{ width: `${chars}ch` }}
-          >
-            {label}
-          </span>
-          <Bracket />
-        </div>
-
-        <div className="flex w-full items-baseline justify-between font-mono text-[10px] uppercase leading-none tracking-[0.12em] [font-variant-numeric:tabular-nums]">
-          <p>{name}</p>
-          <p className="text-accent">[{progress}%]</p>
-        </div>
-        <div className="h-px w-full overflow-hidden bg-[color-mix(in_srgb,var(--paper)_22%,transparent)]">
-          <span
-            className="block h-full w-full origin-left bg-paper transition-transform duration-[120ms] ease-linear"
-            style={{ transform: `scaleX(${progress / 100})` }}
+      {/* Paint floods up from the bottom; the drippy lip rides on top of the fill. */}
+      <div className="absolute inset-0" style={{ transform: `translateY(${100 - progress}%)` }}>
+        <svg
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+          className="absolute inset-x-0 bottom-full h-[min(18vh,120px)] w-full text-accent"
+        >
+          <path
+            fill="currentColor"
+            d="M0 120V70c60 10 90-20 150-10s80 30 120 10 60-30 110-20 70 20 120 0 70-10 120 5 50-35 100-25 60 55 80 25 60-40 110-15 90 20 140 5 70-20 120 0 80 10 100 0V120z"
           />
-        </div>
+        </svg>
+        <div className="absolute inset-0 bg-accent" />
       </div>
+
+      <p className="absolute inset-0 grid place-items-center font-serif text-[clamp(44px,9vw,104px)] font-light leading-[0.9] tracking-tight">
+        {name}
+      </p>
+      <p className="absolute bottom-8 left-6 right-6 flex justify-between font-mono text-[10px] uppercase tracking-[0.12em] [font-variant-numeric:tabular-nums]">
+        <span>{label}</span>
+        <span>{progress}%</span>
+      </p>
       <div className="absolute inset-x-0 top-full h-[10vh] rounded-b-[50%_100%] bg-[#050505]" />
     </div>
   );

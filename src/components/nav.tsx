@@ -9,7 +9,6 @@ import { useLenis } from './smooth-scroll';
 
 const LINKS = [
   { href: '/', label: 'Home' },
-  { href: '/studio', label: 'About' },
   { href: '/work', label: 'Work' },
   { href: '/services', label: 'Services' },
 ] as const;
